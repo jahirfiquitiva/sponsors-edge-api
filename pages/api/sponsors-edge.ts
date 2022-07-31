@@ -10,6 +10,12 @@ export const config = {
 
 export default async function handler(req: NextRequest) {
   const rawResponse = await getSponsorsGraphQLResponse();
+  if (rawResponse.message) {
+    return new Response(JSON.stringify(rawResponse), {
+      status: 401,
+      headers: { 'content-type': 'application/json' },
+    });
+  }
   return new Response(JSON.stringify(transformResponseIntoSponsorships(rawResponse)), {
     status: 200,
     headers: { 'content-type': 'application/json' },

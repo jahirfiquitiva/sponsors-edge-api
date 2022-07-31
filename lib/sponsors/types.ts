@@ -33,7 +33,7 @@ interface SponsorsListing {
 }
 
 export interface SponsorsResponse {
-  data: {
+  data?: {
     user: {
       sponsorsListing: SponsorsListing;
       sponsors: {
@@ -41,6 +41,7 @@ export interface SponsorsResponse {
       };
     };
   };
+  message?: string;
 }
 
 export interface Sponsor {

@@ -102,7 +102,10 @@ export const transformResponseIntoSponsorships = (rawResponse: SponsorsResponse)
   // Get the listing and sponsors object from the raw response.
   // We rename `sponsorsListing` to just `listing` for ease.
   // This is done locally only and does not modify the `rawResponse` object.
-  const { sponsorsListing: listing, sponsors } = rawResponse.data.user;
+  const { sponsorsListing: listing, sponsors } = rawResponse.data?.user || {};
+  if (!listing || !sponsors) {
+    return { tiers: [], total: 0 };
+  }
   return {
     // Transform `SponsorsTier` into `Tier` using the `transformRawTierIntoTier` function
     tiers: listing.tiers.nodes.map(transformRawTierIntoTier),
